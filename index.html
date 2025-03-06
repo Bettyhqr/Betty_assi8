@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kitty Image Selector</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Pangolin", "Comic Sans MS", cursive;
+            text-align: center;
+            margin: 50px;
+            background-color: #ffe4e1;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        img {
+            max-width: 250px;
+            height: auto;
+            border: 4px dashed #ff69b4;
+            padding: 10px;
+            display: none;
+            border-radius: 10px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        input {
+            padding: 10px;
+            font-size: 18px;
+            text-align: center;
+            border-radius: 8px;
+            border: 2px solid #ffb6c1;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-family: inherit;
+        }
+        input:focus {
+            border-color: #ff1493;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+            font-family: inherit;
+        }
+        button:hover {
+            background: #ff1493;
+        }
+        button:active {
+            transform: scale(0.9);
+        }
+        .kitty-bounce {
+            animation: bounce 0.6s ease-in-out;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <label for="first">Enter a profession (doctor, chef, artist):</label>
+        <input type="text" id="first" placeholder="doctor, chef, artist">
+        
+        <label for="second">Enter an ootd color (red, blue, green):</label>
+        <input type="text" id="second" placeholder="red, blue, green">
+        
+        <button id="submitButton">View the picture</button>
+        
+        <img id="displayImage" src="" alt="Press Enter to view the image">
+    </div>
+    
+    <script>
+        const imageMap = {
+            'doctorred': 'IMG_5356.jpg',
+            'doctorblue': 'IMG_5357.jpg',
+            'doctorgreen': 'IMG_5355.jpg',
+            'chefred': 'IMG_5358.jpg',
+            'chefblue': 'IMG_5360.jpg',
+            'chefgreen': 'IMG_5359.jpg',
+            'artistred': 'IMG_5361 2.jpg',
+            'artistblue': 'IMG_5363 2.jpg',
+            'artistgreen': 'IMG_5362 2.jpg'
+        };
+        
+        function updateImage() {
+            const first = document.getElementById('first').value.trim().toLowerCase();
+            const second = document.getElementById('second').value.trim().toLowerCase();
+            const key = first + second;
+            const img = document.getElementById('displayImage');
+            
+            if (imageMap[key]) {
+                img.src = imageMap[key];
+                img.alt = `Kitty dressed as ${first} in ${second}`;
+                img.style.display = 'block';
+                setTimeout(() => {
+                    img.style.opacity = 1;
+                    img.classList.add("kitty-bounce");
+                }, 50);
+            } else {
+                img.style.opacity = 0;
+                setTimeout(() => {
+                    img.style.display = 'none';
+                }, 500);
+            }
+        }
+        
+        document.getElementById('submitButton').addEventListener('click', updateImage);
+    </script>
+</body>
+</html>
